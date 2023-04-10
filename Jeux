@@ -22,7 +22,7 @@ function notSupported()
 end
  
 -- function loadKeySystem()
--- 	loadstring(game:HttpGet("https://raw.githubusercontent.com/ITHALLKyko/V1.4/main/KykoHubKeyV1.4"))()
+-- 	loadstring(game:HttpGet("https://raw.githubusercontent.com/LosHUB/L_HUBV2/main/Key%20System"))()
 -- end
 
 function loadKyko()
