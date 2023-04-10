@@ -1,0 +1,45 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+-- local hwidPaste = loadstring(game:HttpGet("https://pastebin.com/Yg8bUMQu"))()
+-- local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+local discord = "https://discord.gg/srh43uxcVG"
+
+local Games = {
+    [11542692507] = "https://raw.githubusercontent.com/vabalata1/L-HUB-V2-GAME/main/Anime%20Souls%20Simulators", -- Anime Souls Simulator
+    [11334163219] = "https://raw.githubusercontent.com/ITHALLKyko/KykoHub/main/AnimePowerSimulator", -- Anime Power Simulator
+    [11929558254] = "https://raw.githubusercontent.com/ITHALLKyko/KykoHub/main/1PerSecond", -- 1 Per Second
+    [11746859781] = "https://raw.githubusercontent.com/ITHALLKyko/KykoHub/main/BubbleGumClickers", -- Bubble Gum Clicker
+	[10982284336] = "https://raw.githubusercontent.com/ITHALLKyko/KykoHub/main/AnimeIdleSimulator", -- Anime Idle Simulator
+	[12413786484] = "https://raw.githubusercontent.com/ITHALLKyko/KykoHub/main/AnimeLostSimulator", -- Anime Lost Simulator
+}
+
+function notSupported()
+	OrionLib:MakeNotification({
+		Name = "👎 L-Hub 👎",
+		Content = "The game is not supported!",
+		Image = "rbxassetid://4483345998",
+		Time = 5
+	})
+end
+ 
+-- function loadKeySystem()
+-- 	loadstring(game:HttpGet("https://raw.githubusercontent.com/ITHALLKyko/V1.4/main/KykoHubKeyV1.4"))()
+-- end
+
+function loadKyko()
+if Games[game.PlaceId] then
+    loadstring(game:HttpGet(Games[game.PlaceId]))()
+else
+	notSupported()
+end
+end
+
+loadKyko()
+
+-- loadKeySystem()
+
+-- for i, v in pairs(hwidPaste) do
+--      if v == hwid then
+--          loadKyko()
+--          setclipboard("👎 L-Hub 👎 DISCORD: "..discord)
+-- end
+-- end
