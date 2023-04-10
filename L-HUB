@@ -7,7 +7,7 @@ function Loader()
 end
 
 function loadKeySystem()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/vabalata1/L-HUB-V2/main/Key%20Systeme"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/LosHUB/L_HUBV2/main/Key%20System"))()
 end
 
 loadKeySystem()
