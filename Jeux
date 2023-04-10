@@ -4,7 +4,7 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 local discord = "https://discord.gg/srh43uxcVG"
 
 local Games = {
-    [11542692507] = "https://raw.githubusercontent.com/vabalata1/L-HUB-V2-GAME/main/Anime%20Souls%20Simulators", -- Anime Souls Simulator
+    [8425128940] = "https://raw.githubusercontent.com/LosHUB/L_HUBV2/main/Game/Anime%20Souls%20Simulator", -- Anime Souls Simulator
     [11334163219] = "https://raw.githubusercontent.com/ITHALLKyko/KykoHub/main/AnimePowerSimulator", -- Anime Power Simulator
     [11929558254] = "https://raw.githubusercontent.com/ITHALLKyko/KykoHub/main/1PerSecond", -- 1 Per Second
     [11746859781] = "https://raw.githubusercontent.com/ITHALLKyko/KykoHub/main/BubbleGumClickers", -- Bubble Gum Clicker
