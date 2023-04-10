@@ -1,0 +1,65 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function OpenScript()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/vabalata1/L-HUB-V2/main/jeux'))()
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Player = game.Players.LocalPlayer
+local Window = OrionLib:MakeWindow({Name = "Key System", HidePremium = false, SaveConfig = true, IntroEnabled = false})
+local keyPaste = loadstring(game:HttpGet(('https://pastebin.com/raw/HpFduMFH')))()
+
+OrionLib:MakeNotification({
+	Name = "Logged in!",
+	Content = "You are logged in as "..Player.Name..".",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+
+_G.Key = loadstring(game:HttpGet(('https://pastebin.com/raw/HpFduMFH')))()
+_G.KeyInput = "string"
+
+function verify()
+for i, v in pairs(keyPaste) do
+    if v == _G.KeyInput then
+        OpenScript()
+    end
+end
+end
+
+local Tab = Window:MakeTab({
+	Name = "Key",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+
+Tab:AddTextbox({
+	Name = "Enter Key",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+        _G.KeyInput = Value
+	end	  
+})
+
+Tab:AddButton({
+Name = "Click Here To Check Key",
+Callback = function()
+       	verify()
+    end   
+})
+
+local Section = Tab:AddSection({
+	Name = "Get Key"
+})
+
+Tab:AddButton({
+Name = "Click To Get Key Link",
+Callback = function()
+    setclipboard("https://discord.gg/srh43uxcVG")       
+end   
+})
+
+
+OrionLib:Init()
