@@ -46,7 +46,7 @@ function SendMessage(Message, Botname)
 end
 
 
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
 
 task.spawn(function()
 	pcall(function()
