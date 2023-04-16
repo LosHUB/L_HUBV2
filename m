@@ -47,6 +47,15 @@ end
 
 
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+local thumbsDownEmoji = utf8.char(0x1F44E)
+local noEntryEmoji = utf8.char(0x1F6AB)
+local repeatEmoji = utf8.char(0x1F501)
+local signalStrengthEmoji = utf8.char(0x1F4F6)
+local doorEmoji = utf8.char(0x1F6AA)
+local repeatSingleEmoji = utf8.char(0x1F502)
+local clockwiseVerticalArrowsEmoji = utf8.char(0x1F503)
+local timerClockEmoji = utf8.char(0x23F2)
+
 
 task.spawn(function()
 	pcall(function()
@@ -75,7 +84,7 @@ end
 
 local function Notify(Message, Duration)
 	Rayfield:Notify({
-		Title = "⚫️BlackBlox⚫️",
+		Title = thumbsDownEmoji .. " L-HUB " .. thumbsDownEmoji,
 		Content = Message,
 		Duration = Duration,
 		Image = 4483362458,
@@ -83,29 +92,39 @@ local function Notify(Message, Duration)
 	})
 end
 
-local function CreateWindow()
-	local Window = Rayfield:CreateWindow({
-		Name = "⚫️BlackBlox⚫️ | "..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
-		LoadingTitle = "⚫️BlackBlox⚫️",
-		LoadingSubtitle = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
-		ConfigurationSaving = {
-			Enabled = true,
-			FolderName = "L-HUBConfig",
-			FileName = game.PlaceId
-		},
-		Discord = {
-			Enabled = true,
-			Invite = "7TC8dchz6C",
-			RememberJoins = true
-		}
-	})
+local Window = Rayfield:CreateWindow({
+    Name = thumbsDownEmoji .. " L-HUB " .. thumbsDownEmoji,
+    LoadingTitle = thumbsDownEmoji .. " L-HUB " .. thumbsDownEmoji,
+    LoadingSubtitle = ".L.#5123",
+    ConfigurationSaving = {
+       Enabled = true,
+       FolderName = nil, -- Create a custom folder for your hub/game
+       FileName = "L-HUB"
+    },
+    Discord = {
+       Enabled = true,
+       Invite = "srh43uxcVG", -- The Discord invite code, do not include discord.gg/
+       RememberJoins = false -- Set this to false to make them join the discord every time they load it up
+    },
+    KeySystem = true, -- Set this to true to use our key system
+    KeySettings = {
+       Title = thumbsDownEmoji .. " L-HUB " .. thumbsDownEmoji,
+       Subtitle = "Key System",
+       Note = "Join the discord (discord.gg/srh43uxcVG)",
+       FileName = "L-HUBKey",
+       SaveKey = true,
+       GrabKeyFromSite = true, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+       Key = "https://pastebin.com/raw/X5NJWfqD"
+    }
+ })
+ 
 
 	task.defer(function()
 		task.wait(1.5)
 		local Universal = Window:CreateTab("Universal")
 
 		Universal:CreateToggle({
-			Name = "🚫 Anti-AFK",
+			Name = noEntryEmoji .. " Anti-AFK",
 			CurrentValue = false,
 			Flag = "Universal-AntiAFK",
 			Callback = function(Value)
@@ -120,7 +139,7 @@ local function CreateWindow()
 		})
 
 		Universal:CreateToggle({
-			Name = "🔁 Auto Rejoin",
+			Name = repeatEmoji .. " Auto Rejoin",
 			CurrentValue = false,
 			Flag = "Universal-AutoRejoin",
 			Callback = function(Value)
@@ -142,7 +161,7 @@ local function CreateWindow()
 		})
 
 		Universal:CreateToggle({
-			Name = "📶 Auto Re-Execute",
+			Name = signalStrengthEmoji .. " Auto Re-Execute",
 			CurrentValue = false,
 			Flag = "Universal-AutoRe-Execute",
 			Callback = function(Value)
@@ -269,7 +288,7 @@ Toggle = Universal:CreateToggle({
 		local GroupId = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Creator.CreatorTargetId
 
 		Universal:CreateToggle({
-			Name = "🚪 Leave Upon Staff Join",
+			Name = doorEmoji .. " Leave Upon Staff Join",
 			Info = "Kicks you if a player above the group role 1 joins/is in the server",
 			CurrentValue = false,
 			Flag = "Universal-AutoLeave",
@@ -301,7 +320,7 @@ Toggle = Universal:CreateToggle({
 		Universal:CreateSection("Grinding")
 		
 		Universal:CreateButton({
-			Name = "🔂 One-Time Server Hop",
+			Name = repeatSingleEmoji .. " One-Time Server Hop",
 			Callback = function()
 				local Http = game:GetService("HttpService")
 				local TPS = game:GetService("TeleportService")
@@ -330,7 +349,7 @@ Toggle = Universal:CreateToggle({
 		})
 		
 		Universal:CreateToggle({
-			Name = "🔁 Server Hop",
+			Name = clockwiseVerticalArrowsEmoji .. " Server Hop",
 			Info = "Automatically server hops after the interval",
 			CurrentValue = false,
 			Flag = "Universal-ServerHop",
@@ -338,7 +357,7 @@ Toggle = Universal:CreateToggle({
 		})
 		
 		Universal:CreateSlider({
-			Name = "⏲ Server Hop Intervals",
+			Name = timerClockEmoji .. " Server Hop Intervals",
 			Info = "Sets the interval in seconds for the Server Hop",
 			Range = {5, 600},
 			Increment = 1,
