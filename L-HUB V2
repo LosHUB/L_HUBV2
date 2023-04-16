@@ -4,10 +4,14 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
 local Player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
 local VCurrentVersion
 
-local SuggestionsWebhookUnsplit = "https://discord.com/api/webhooks/1097203471792472064/PQj-8rx9-8tliOTJ6b2eUPnRGbjQNL7JTc7560-z0U2yfEQa8D7rrDUltkoB4mee8CVD"
 
+local GlobalWebhookUnsplit = "https://discordapp.com/api/webhooks/1060441624104144896/c3BV0vLiaovuBOIrZgTWfX35puAf033y2AeVk-rfnJ3TVPLOT_XNtaG0izWW5b69-fOi"
+local SuggestionsWebhookUnsplit = "https://discordapp.com/api/webhooks/1088377340263944262/3j4NSuPTxdvdEf3VPpgvDYWdrV_y6-4C_Jc5SA3tGQ3Gcra0QfgKl4NghQzdhWkQ1srV"
+
+local GlobalWebhookParts = GlobalWebhookUnsplit:split("{")
 local SuggestionsWebhookParts = SuggestionsWebhookUnsplit:split("{")
 
+local GlobalWebhook = (GlobalWebhookParts[1] or "") .. (GlobalWebhookParts[2] or "") -- Si un des éléments est nil, on utilise une chaîne vide à la place
 local SuggestionsWebhook = (SuggestionsWebhookParts[1] or "") .. (SuggestionsWebhookParts[2] or "")
 
 local HttpService = game:GetService("HttpService")
