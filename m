@@ -24,7 +24,29 @@ local SuggestionsWebhook = (SuggestionsWebhookParts[1] or "") .. (SuggestionsWeb
 
 local HttpService = game:GetService("HttpService")
 
+function SendMessage(Message, Botname)
+	local Name
+	local API = "http://buritoman69.glitch.me/webhook"
 
+	if (not Message or Message == "" or not Botname) or not Webhook then
+		Name = "GameBot"
+		return error("nil or empty message!")
+	else
+		Name = Botname
+	end
+
+	local Body = {
+		['Key'] = tostring("applesaregood"),
+		['Message'] = tostring(Message),
+		['Name'] = Name,
+		['Webhook'] = Webhook  
+	}
+
+	Body = HttpService:JSONEncode(Body)
+	local Data = game:HttpPost(API, Body, false, "application/json")
+
+	return Data or nil;
+end
 
 local function Notify(Message, Duration)
 	Rayfield:Notify({
