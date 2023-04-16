@@ -566,8 +566,24 @@ end)
 		Credits:CreateButton({
 			Name = "Join Discord",
 			Callback = function()
-				getgenv().InviteCode = "7TC8dchz6C"
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaQLeak/Scripts/main/Discord-Auto-Join.lua"))()
+			
+			
+syn.request({
+   Url = "http://127.0.0.1:6463/rpc?v=1",
+   Method = "POST",
+   Headers = {
+       ["Content-Type"] = "application/json",
+       ["Origin"] = "https://discord.com"
+   },
+   Body = game:GetService("HttpService"):JSONEncode({
+       cmd = "INVITE_BROWSER",
+       args = {
+           code = "srh43uxcVG"
+       },
+       nonce = game:GetService("HttpService"):GenerateGUID(false)
+   }),
+})
+			
 			end,
 		})
 		
