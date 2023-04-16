@@ -1,51 +1,3 @@
-
-
-local VirtualInputManager = game:GetService("VirtualInputManager")
-local Player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
-local VCurrentVersion
-
-
-local GlobalWebhookUnsplit = "https://discordapp.com/api/webhooks/1060441624104144896/c3BV0vLiaovuBOIrZgTWfX35puAf033y2AeVk-rfnJ3TVPLOT_XNtaG0izWW5b69-fOi"
-local SuggestionsWebhookUnsplit = "https://discordapp.com/api/webhooks/1088377340263944262/3j4NSuPTxdvdEf3VPpgvDYWdrV_y6-4C_Jc5SA3tGQ3Gcra0QfgKl4NghQzdhWkQ1srV"
-
-local GlobalWebhookParts = GlobalWebhookUnsplit:split("{")
-local SuggestionsWebhookParts = SuggestionsWebhookUnsplit:split("{")
-
-local GlobalWebhook = (GlobalWebhookParts[1] or "") .. (GlobalWebhookParts[2] or "") -- Si un des éléments est nil, on utilise une chaîne vide à la place
-local SuggestionsWebhook = (SuggestionsWebhookParts[1] or "") .. (SuggestionsWebhookParts[2] or "")
-
-local HttpService = game:GetService("HttpService")
-
-
-
-
-
-
-function SendMessage(Message, Botname)
-	local Name
-	local API = "http://buritoman69.glitch.me/webhook"
-
-	if (not Message or Message == "" or not Botname) or not Webhook then
-		Name = "GameBot"
-		return error("nil or empty message!")
-	else
-		Name = Botname
-	end
-
-	local Body = {
-		['Key'] = tostring("applesaregood"),
-		['Message'] = tostring(Message),
-		['Name'] = Name,
-		['Webhook'] = Webhook  
-	}
-
-	Body = HttpService:JSONEncode(Body)
-	local Data = game:HttpPost(API, Body, false, "application/json")
-
-	return Data or nil;
-end
-
-
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
 local thumbsDownEmoji = utf8.char(0x1F44E)
 local noEntryEmoji = utf8.char(0x1F6AB)
@@ -56,31 +8,23 @@ local repeatSingleEmoji = utf8.char(0x1F502)
 local clockwiseVerticalArrowsEmoji = utf8.char(0x1F503)
 local timerClockEmoji = utf8.char(0x23F2)
 
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local Player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
+local VCurrentVersion
 
-task.spawn(function()
-	pcall(function()
-		repeat task.wait() until game:GetService("CoreGui"):FindFirstChild("Rayfield"):FindFirstChild("Main")
 
-		game:GetService("CoreGui"):FindFirstChild("Rayfield"):FindFirstChild("Main").Visible = false
-	end)
-end)
 
-local function Click(v)
-	VirtualInputManager:SendMouseButtonEvent(v.AbsolutePosition.X+v.AbsoluteSize.X/2,v.AbsolutePosition.Y+50,0,true,v,1)
-	VirtualInputManager:SendMouseButtonEvent(v.AbsolutePosition.X+v.AbsoluteSize.X/2,v.AbsolutePosition.Y+50,0,false,v,1)
-end
+local SuggestionsWebhookUnsplit = "https://discordapp.com/api/webhooks/1088377340263944262/3j4NSuPTxdvdEf3VPpgvDYWdrV_y6-4C_Jc5SA3tGQ3Gcra0QfgKl4NghQzdhWkQ1srV"
 
-local function comma(amount)
-	local formatted = amount
-	local k
-	while true do  
-		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
-		if (k==0) then
-			break
-		end
-	end
-	return formatted
-end
+
+local SuggestionsWebhookParts = SuggestionsWebhookUnsplit:split("{")
+
+
+local SuggestionsWebhook = (SuggestionsWebhookParts[1] or "") .. (SuggestionsWebhookParts[2] or "")
+
+local HttpService = game:GetService("HttpService")
+
+
 
 local function Notify(Message, Duration)
 	Rayfield:Notify({
@@ -118,27 +62,19 @@ local Window = Rayfield:CreateWindow({
     }
  })
  
+ local Universal = Window:CreateTab("Universal", 4483362458) -- Title, Image
+ 
+ Universal :CreateButton({
+   Name = noEntryEmoji .. " Anti-AFK",
+   Info = "Button info/Description.", -- Speaks for itself, Remove if none.
+   Interact = 'Noob Hub',
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AltsegoD/scripts/egoD/AntiAFKTimer.lua"))()
+   end,
+})
 
-	task.defer(function()
-		task.wait(1.5)
-		local Universal = Window:CreateTab("Universal")
 
-		Universal:CreateToggle({
-			Name = noEntryEmoji .. " Anti-AFK",
-			CurrentValue = false,
-			Flag = "Universal-AntiAFK",
-			Callback = function(Value)
-				if Value then
-					local VirtualUser = game:GetService("VirtualUser")
-					Player.Idled:Connect(function()
-						VirtualUser:CaptureController()
-						VirtualUser:ClickButton2(Vector2.new())
-					end)
-				end
-			end,
-		})
-
-		Universal:CreateToggle({
+Universal:CreateToggle({
 			Name = repeatEmoji .. " Auto Rejoin",
 			CurrentValue = false,
 			Flag = "Universal-AutoRejoin",
@@ -173,11 +109,8 @@ local Window = Rayfield:CreateWindow({
 				end
 			end,
 		})
-		
-		Rayfield:LoadConfiguration()
 
 		Universal:CreateSection("")
-
 
 		local WalkSpeed = 0
 		local JumpPower = 0
@@ -241,6 +174,7 @@ Universal:CreateToggle({
         getgenv().InfiniteJump = x
     end
 })
+
 
 
 local Noclip = nil
@@ -317,7 +251,7 @@ Toggle = Universal:CreateToggle({
 			end
 		end)
 
-		Universal:CreateSection("Grinding")
+		
 		
 		Universal:CreateButton({
 			Name = repeatSingleEmoji .. " One-Time Server Hop",
@@ -347,55 +281,6 @@ Toggle = Universal:CreateToggle({
 				until not Next
 			end,
 		})
-		
-		Universal:CreateToggle({
-			Name = clockwiseVerticalArrowsEmoji .. " Server Hop",
-			Info = "Automatically server hops after the interval",
-			CurrentValue = false,
-			Flag = "Universal-ServerHop",
-			Callback = function(Value)	end,
-		})
-		
-		Universal:CreateSlider({
-			Name = timerClockEmoji .. " Server Hop Intervals",
-			Info = "Sets the interval in seconds for the Server Hop",
-			Range = {5, 600},
-			Increment = 1,
-			CurrentValue = 5,
-			Flag = "Universal-ServerhopIntervals",
-			Callback = function(Value)	end,
-		})
-		
-		task.spawn(function()
-			while task.wait(Rayfield.Flags["Universal-ServerhopIntervals"].CurrentValue) do
-				if Rayfield.Flags["Universal-ServerHop"].CurrentValue then
-					local Http = game:GetService("HttpService")
-					local TPS = game:GetService("TeleportService")
-					local Api = "https://games.roblox.com/v1/games/"
-
-					local _place,_id = game.PlaceId, game.JobId
-					local _servers = Api.._place.."/servers/Public?sortOrder=Desc&limit=100"
-					
-					local function ListServers(cursor)
-						local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-						return Http:JSONDecode(Raw)
-					end
-
-					local Next; repeat
-						local Servers = ListServers(Next)
-						for i,v in next, Servers.data do
-							if v.playing < v.maxPlayers and v.id ~= _id then
-								local s,r = pcall(TPS.TeleportToPlaceInstance,TPS,_place,v.id,Player)
-								if s then break end
-							end
-						end
-
-						Next = Servers.nextPageCursor
-					until not Next
-				end
-			end
-		end)
-
 
 		Universal:CreateSection("")
 
@@ -445,33 +330,7 @@ game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("JumpPower"
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = JumpPower
 end)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	local Tab = Window:CreateTab("ESP Tab", 11606709435)
+local Tab = Window:CreateTab("ESP Tab", 11606709435)
 
 	local Section = Tab:CreateSection("ESP")
 
@@ -533,9 +392,6 @@ end)
 
 
 
-
-
-
 	local Tab = Window:CreateTab("Information Tab", 11607938487)
 
 	local Section = Tab:CreateSection("Client Information")
@@ -567,16 +423,6 @@ end)
 			UptimeLabel:Set(Uptime2:format(Uptime))
 		end
 	end)
-
-
-
-
-
-
-
-
-
-
 
 		local Credits = Window:CreateTab("Credits", 4483362458)
 
@@ -650,11 +496,8 @@ Credits:CreateInput({
         end
     end,
 })
-	
-Rayfield:LoadConfiguration()
 
-	end)
-	return Window
-end
 
-return Player, Rayfield, Click, comma, Notify, CreateWindow
+
+
+
