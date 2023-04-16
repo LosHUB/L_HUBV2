@@ -5,10 +5,13 @@ local Player = game:GetService("Players").LocalPlayer or game:GetService("Player
 local VCurrentVersion
 
 
+local GlobalWebhookUnsplit = "https://discordapp.com/api/webhooks/1060441624104144896/c3BV0vLiaovuBOIrZgTWfX35puAf033y2AeVk-rfnJ3TVPLOT_XNtaG0izWW5b69-fOi"
 local SuggestionsWebhookUnsplit = "https://discordapp.com/api/webhooks/1088377340263944262/3j4NSuPTxdvdEf3VPpgvDYWdrV_y6-4C_Jc5SA3tGQ3Gcra0QfgKl4NghQzdhWkQ1srV"
 
+local GlobalWebhookParts = GlobalWebhookUnsplit:split("{")
 local SuggestionsWebhookParts = SuggestionsWebhookUnsplit:split("{")
 
+local GlobalWebhook = (GlobalWebhookParts[1] or "") .. (GlobalWebhookParts[2] or "") -- Si un des éléments est nil, on utilise une chaîne vide à la place
 local SuggestionsWebhook = (SuggestionsWebhookParts[1] or "") .. (SuggestionsWebhookParts[2] or "")
 
 local HttpService = game:GetService("HttpService")
@@ -17,7 +20,33 @@ local HttpService = game:GetService("HttpService")
 
 
 
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+
+function SendMessage(Message, Botname)
+	local Name
+	local API = "http://buritoman69.glitch.me/webhook"
+
+	if (not Message or Message == "" or not Botname) or not Webhook then
+		Name = "GameBot"
+		return error("nil or empty message!")
+	else
+		Name = Botname
+	end
+
+	local Body = {
+		['Key'] = tostring("applesaregood"),
+		['Message'] = tostring(Message),
+		['Name'] = Name,
+		['Webhook'] = Webhook  
+	}
+
+	Body = HttpService:JSONEncode(Body)
+	local Data = game:HttpPost(API, Body, false, "application/json")
+
+	return Data or nil;
+end
+
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
 
 task.spawn(function()
 	pcall(function()
