@@ -1,0 +1,193 @@
+
+
+
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local Player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
+local VCurrentVersion
+
+local GlobalWebhookUnsplit = "https://discord.com/api/webhooks/1062144063794589726/bC_ftzBkot6xkTAP5hcuyBMMp8V80Wlk5WVO3hjrwI88NUsSIygNAdX5yGDAS6EVYFR8"
+local SuggestionsWebhookUnsplit = "https://discord.com/api/webhooks/1062143918889762896/9NVJWlrDRQLcKToV7xFtuSM4uIz5H93gVc61lQAx8HrfgZfCQElzYh9uZwfqp8-U8eh8"
+
+local GlobalWebhookParts = GlobalWebhookUnsplit:split("{")
+local SuggestionsWebhookParts = SuggestionsWebhookUnsplit:split("{")
+
+local GlobalWebhook = (GlobalWebhookParts[1] or "") .. (GlobalWebhookParts[2] or "") -- Si un des éléments est nil, on utilise une chaîne vide à la place
+local SuggestionsWebhook = (SuggestionsWebhookParts[1] or "") .. (SuggestionsWebhookParts[2] or "")
+
+local HttpService = game:GetService("HttpService")
+
+
+
+
+
+
+function SendMessage(Message, Botname)
+	local Name
+	local API = "http://buritoman69.glitch.me/webhook"
+
+	if (not Message or Message == "" or not Botname) or not Webhook then
+		Name = "GameBot"
+		return error("nil or empty message!")
+	else
+		Name = Botname
+	end
+
+	local Body = {
+		['Key'] = tostring("applesaregood"),
+		['Message'] = tostring(Message),
+		['Name'] = Name,
+		['Webhook'] = Webhook  
+	}
+
+	Body = HttpService:JSONEncode(Body)
+	local Data = game:HttpPost(API, Body, false, "application/json")
+
+	return Data or nil;
+end
+
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+task.spawn(function()
+	pcall(function()
+		repeat task.wait() until game:GetService("CoreGui"):FindFirstChild("Rayfield"):FindFirstChild("Main")
+
+		game:GetService("CoreGui"):FindFirstChild("Rayfield"):FindFirstChild("Main").Visible = false
+	end)
+end)
+
+local function Click(v)
+	VirtualInputManager:SendMouseButtonEvent(v.AbsolutePosition.X+v.AbsoluteSize.X/2,v.AbsolutePosition.Y+50,0,true,v,1)
+	VirtualInputManager:SendMouseButtonEvent(v.AbsolutePosition.X+v.AbsoluteSize.X/2,v.AbsolutePosition.Y+50,0,false,v,1)
+end
+
+local function comma(amount)
+	local formatted = amount
+	local k
+	while true do  
+		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+		if (k==0) then
+			break
+		end
+	end
+	return formatted
+end
+
+local function Notify(Message, Duration)
+	Rayfield:Notify({
+		Title = "👎L-HUB👎",
+		Content = Message,
+		Duration = Duration,
+		Image = 4483362458,
+		Actions = {},
+	})
+end
+
+local function CreateWindow()
+	local Window = Rayfield:CreateWindow({
+		Name = "👎L-HUB👎 | "..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+		LoadingTitle = "👎L-HUB👎",
+		LoadingSubtitle = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+		ConfigurationSaving = {
+			Enabled = true,
+			FolderName = "L-HUBConfig",
+			FileName = game.PlaceId
+		},
+		Discord = {
+			Enabled = true,
+			Invite = "7TC8dchz6C",
+			RememberJoins = true
+		}
+	})
+
+
+
+	local main = Window:CreateTab("Farm", 4483362458) -- Title, Image
+
+
+
+	local Button = main:CreateButton({
+		Name = "INFINITE STATS",
+		Info = "INFINITE STATS", -- Speaks for itself, Remove if none.
+		Interact = 'Changable',
+		Callback = function()
+
+
+
+
+			local args = {
+				[1] = "AttributeConnection",
+				[2] = "Durability",
+				[3] = -999999
+			}
+			
+			game:GetService("ReplicatedStorage"):WaitForChild("Communication"):WaitForChild("CommunicationEvent_4169107649"):FireServer(unpack(args))
+
+
+		end,
+	 })
+
+
+
+	 local Button = main:CreateButton({
+		Name = "reset stats [free]",
+		Info = "reset stats [free]", -- Speaks for itself, Remove if none.
+		Interact = 'Changable',
+		Callback = function()
+
+
+
+
+			local args = {
+				[1] = "AttributeConnection",
+				[2] = "Durability",
+				[3] = -999999
+			}
+			
+			game:GetService("ReplicatedStorage"):WaitForChild("Communication"):WaitForChild("CommunicationEvent_4169107649"):FireServer(unpack(args))
+
+
+		end,
+	 })
+
+
+
+
+
+
+
+
+
+
+
+getgenv().InstantKill = false 
+
+local Toggle = Tab:CreateToggle({
+   Name = "Toggle Example",
+   Info = "Toggle info/Description.",
+   CurrentValue = false,
+   Flag = "Toggle1",
+   Callback = function(Value)
+       getgenv().InstantKill = Value 
+       if Value then 
+           while getgenv().InstantKill do 
+               for i,v in pairs(workspace.World.Live.Enemies:GetChildren()) do     
+                   if v:IsA('Model') then 
+                      local args = {
+                          [1] = "CombatConnection",
+                          [2] = "RegisterClientAttack",
+                          [3] = {
+                              ["Aerial"] = false,
+                              ["AttackType"] = "Light",
+                              ["FoundPlayer"] = workspace:WaitForChild("World"):WaitForChild("Live"):WaitForChild("Enemies"):WaitForChild(v.Name)
+                          }
+                      }
+        
+                      game:GetService("ReplicatedStorage"):WaitForChild("Communication"):WaitForChild("CommunicationEvent_4169107649"):FireServer(unpack(args))
+                   end 
+               end
+               task.wait() 
+           end
+       end
+   end,
+})
