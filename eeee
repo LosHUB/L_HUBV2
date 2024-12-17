@@ -1,0 +1,202 @@
+local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
+local trueData = "22bdef074e20455a84d19dc5af73b3e1"
+local falseData = "8d015787d91a40a2b6b0ad4ac5ece342"
+
+KeyGuardLibrary.Set({
+    publicToken = "b21b716cc5054b499e925c99a61bc671",
+    privateToken = "de168967445d4680994f08e06aa3ad67",
+    trueData = trueData,
+    falseData = falseData,
+})
+
+local HttpService = game:GetService("HttpService")
+local FileName = "AutoSaveFeatures-AUS1_" .. game.Players.LocalPlayer.Name .. ".txt"
+local SavedKey = nil
+
+if isfile(FileName) then
+    local savedData = readfile(FileName)
+    SavedKey = HttpService:JSONDecode(savedData).key or nil
+end
+
+local function isKeyValid(key)
+    local freeResponse = KeyGuardLibrary.validateDefaultKey(key)
+    if freeResponse == trueData then
+        return "free"
+    else
+        local premiumResponse = KeyGuardLibrary.validatePremiumKey(key)
+        if premiumResponse == trueData then
+            return "premium"
+        else
+            return false
+        end
+    end
+end
+
+local function createUICorner(parent, cornerRadius)
+    local uiCorner = Instance.new("UICorner")
+    uiCorner.CornerRadius = UDim.new(0, cornerRadius)
+    uiCorner.Parent = parent
+    return uiCorner
+end
+
+local function createUIGradient(parent, color1, color2)
+    local uiGradient = Instance.new("UIGradient")
+    uiGradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, color1),
+        ColorSequenceKeypoint.new(1, color2),
+    })
+    uiGradient.Parent = parent
+    return uiGradient
+end
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextBox = Instance.new("TextBox")
+local ValidateButton = Instance.new("TextButton")
+local CopyLinkButton = Instance.new("TextButton")
+local CloseButton = Instance.new("TextButton")
+local Label = Instance.new("TextLabel")
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Name = "KeyValidatorGUI"
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.Size = UDim2.new(0, 400, 0, 300)
+Frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame.BorderSizePixel = 0
+createUICorner(Frame, 20)
+
+TextBox.Parent = Frame
+TextBox.PlaceholderText = "Enter your key here"
+TextBox.Size = UDim2.new(0.8, 0, 0.15, 0)
+TextBox.Position = UDim2.new(0.1, 0, 0.1, 0)
+TextBox.Text = SavedKey or ""
+TextBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.BorderSizePixel = 0
+TextBox.Font = Enum.Font.SourceSans
+TextBox.TextSize = 18
+createUICorner(TextBox, 10)
+createUIGradient(TextBox, Color3.fromRGB(60, 60, 80), Color3.fromRGB(20, 20, 30))
+
+local function styleButton(button, gradientColors)
+    button.BackgroundColor3 = gradientColors[1]
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Font = Enum.Font.SourceSansBold
+    button.TextSize = 20
+    button.BorderSizePixel = 0
+    button.TextStrokeTransparency = 0
+    button.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    createUICorner(button, 10)
+    createUIGradient(button, gradientColors[2], gradientColors[3])
+end
+
+styleButton(ValidateButton, {
+    Color3.fromRGB(50, 100, 200),
+    Color3.fromRGB(70, 150, 250),
+    Color3.fromRGB(40, 80, 150)
+})
+ValidateButton.Parent = Frame
+ValidateButton.Text = "Validate Key"
+ValidateButton.Size = UDim2.new(0.35, 0, 0.15, 0)
+ValidateButton.Position = UDim2.new(0.1, 0, 0.35, 0)
+
+styleButton(CopyLinkButton, {
+    Color3.fromRGB(0, 150, 100),
+    Color3.fromRGB(50, 200, 150),
+    Color3.fromRGB(0, 100, 80)
+})
+CopyLinkButton.Parent = Frame
+CopyLinkButton.Text = "Copy Key Link"
+CopyLinkButton.Size = UDim2.new(0.35, 0, 0.15, 0)
+CopyLinkButton.Position = UDim2.new(0.55, 0, 0.35, 0)
+
+styleButton(CloseButton, {
+    Color3.fromRGB(200, 50, 50),
+    Color3.fromRGB(250, 100, 100),
+    Color3.fromRGB(150, 30, 30)
+})
+CloseButton.Parent = Frame
+CloseButton.Text = "Close"
+CloseButton.Size = UDim2.new(0.8, 0, 0.15, 0)
+CloseButton.Position = UDim2.new(0.1, 0, 0.55, 0)
+
+Label.Parent = Frame
+Label.Text = ""
+Label.Size = UDim2.new(0.9, 0, 0.15, 0)
+Label.Position = UDim2.new(0.05, 0, 0.75, 0)
+Label.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+Label.BorderSizePixel = 0
+Label.Font = Enum.Font.SourceSansBold
+Label.TextSize = 16
+Label.TextScaled = true
+createUICorner(Label, 10)
+createUIGradient(Label, Color3.fromRGB(60, 60, 80), Color3.fromRGB(20, 20, 30))
+
+local function LoadGame()
+    Label.Text = "L-HUB Game loaded!"
+    Label.TextColor3 = Color3.fromRGB(0, 255, 0)
+    wait(1)
+    ScreenGui:Destroy()  -- Closes the interface after loading
+    local scriptURL = "https://raw.githubusercontent.com/LosHUB/L-HUBV3/refs/heads/main/Jeux/Main"
+    loadstring(game:HttpGet(scriptURL))()
+end
+
+if SavedKey then
+    local keyType = isKeyValid(SavedKey)
+    if keyType then
+        Label.Text = "Valid " .. keyType:upper() .. " Key"
+        Label.TextColor3 = keyType == "free" and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(0, 255, 255)
+        LoadGame()
+    else
+        Label.Text = "Invalid Key"
+        Label.TextColor3 = Color3.fromRGB(255, 0, 0)
+        TextBox.Text = ""
+    end
+end
+
+ValidateButton.MouseButton1Click:Connect(function()
+    local key = TextBox.Text
+    local freeResponse = KeyGuardLibrary.validateDefaultKey(key)
+    if freeResponse == trueData then
+        Label.Text = "Valid Free Key"
+        Label.TextColor3 = Color3.fromRGB(0, 255, 0)
+        SavedKey = key
+        local saveData = HttpService:JSONEncode({key = SavedKey})
+        writefile(FileName, saveData)
+        LoadGame()  -- Closes the interface after loading
+    else
+        local premiumResponse = KeyGuardLibrary.validatePremiumKey(key)
+        if premiumResponse == trueData then
+            Label.Text = "Valid Premium Key"
+            Label.TextColor3 = Color3.fromRGB(0, 255, 255)
+            SavedKey = key
+            local saveData = HttpService:JSONEncode({key = SavedKey})
+            writefile(FileName, saveData)
+            LoadGame()  -- Closes the interface after loading
+        else
+            Label.Text = "Invalid Key"
+            Label.TextColor3 = Color3.fromRGB(255, 0, 0)
+            TextBox.Text = ""
+        end
+    end
+end)
+
+CopyLinkButton.MouseButton1Click:Connect(function()
+    local keyLink = KeyGuardLibrary.getLink()
+    if setclipboard then
+        setclipboard(keyLink)
+        Label.Text = "Key link copied!"
+        Label.TextColor3 = Color3.fromRGB(0, 255, 0)
+    else
+        Label.Text = "Clipboard not supported."
+        Label.TextColor3 = Color3.fromRGB(255, 255, 0)
+    end
+end)
+
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
