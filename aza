@@ -8,10 +8,6 @@ local AllowedHwid = "d9675a40-6d0f-4276-80b7-6209913edcc3"
 
 -- Fonction pour charger le jeu
 local function LoadGame()
-    -- Protection contre les erreurs sur Fluent.Destroy()
-    local success, err = pcall(function()
-        Fluent.Destroy()
-    end)
 
     if not success then
         warn("Erreur lors de l'appel à Fluent.Destroy() : " .. tostring(err))
