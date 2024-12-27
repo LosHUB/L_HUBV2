@@ -1,4 +1,4 @@
-
+print("caca")
 
 
 local GetHwid = game:GetService("RbxAnalyticsService"):GetClientId()
