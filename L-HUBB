@@ -1,4 +1,4 @@
-print("caca")
+print("ssscaca")
 
 
 local GetHwid = game:GetService("RbxAnalyticsService"):GetClientId()
@@ -6,8 +6,11 @@ local GetHwid = game:GetService("RbxAnalyticsService"):GetClientId()
 local HttpService = game:GetService("HttpService")
 local FileName = "AutoSaveKeyL-HUB_" .. game.Players.LocalPlayer.Name .. ".txt"
 
--- HWID spécifique
-local AllowedHwid = "b0d6d607-e5e6-444f-bf39-9b2ffbaf1567"
+-- Liste des HWIDs autorisés
+local AllowedHwids = {
+    "d9675a40-6d0f-4276-80b7-6209913edcc3",
+    "b0d6d607-e5e6-444f-bf39-9b2ffbaf1567"
+}
 
 local function LoadGame()
     -- Protection contre les erreurs sur Fluent.Destroy()
@@ -20,11 +23,11 @@ local function LoadGame()
     end
 
     local scriptURL = "https://raw.githubusercontent.com/LosHUB/L-HUB/refs/heads/main/PGame"
-    loadstring(game:HttpGet(scriptURL))()  -- Charger et exécuter le script externe
+    loadstring(game:HttpGet(scriptURL))() -- Charger et exécuter le script externe
 end
 
 -- Vérification de l'HWID
-if GetHwid == AllowedHwid then
+if table.find(AllowedHwids, GetHwid) then
     print("HWID vérifié : accès autorisé.")
     LoadGame()
     return -- Arrêter l'exécution du reste du script
